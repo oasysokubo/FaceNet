@@ -20,7 +20,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Utils;
 
-// コントローラクラス
+/**
+ * This controller is the main frame of the application. All the logic is
+ * implemented here.
+ * 
+ * What controller does: - Start/stops camera usage - Classifier controls -
+ * Video stream - Face detection/tracking
+ * 
+ * コントローラクラス
+ */
 public class Controller {
 
 	@FXML
@@ -37,7 +45,7 @@ public class Controller {
 	private CheckBox lbpClassifier;
 
 	// OpenCV object that manipulates video capture
-	private VideoCapture capture = new VideoCapture();
+	private VideoCapture capture;
 
 	// Scheduled timer to aquire frame of video capture
 	private ScheduledExecutorService timer;
@@ -46,11 +54,28 @@ public class Controller {
 	private boolean cameraActive = false;
 
 	// Camera id
-	private static int cameraID = 0;
+	private static int cameraID;
 
 	// face cascade classifier
 	private CascadeClassifier faceCascade;
 	private int absoluteFaceSize;
+
+	/**
+	 * Initialization of controller at start time
+	 */
+	protected void initialize() {
+		this.capture = new VideoCapture();
+		this.faceCascade = new CascadeClassifier();
+		this.absoluteFaceSize = 0;
+
+		// Set fixed width of frame
+		currentFrame.setFitWidth(600);
+		// Preserve image ratio
+		currentFrame.setPreserveRatio(true);
+
+		// Camera ID for camera usage
+		cameraID = 0;
+	}
 
 	/**
 	 * Executed after the FXML button is pushed
@@ -71,7 +96,7 @@ public class Controller {
 
 				// Passes if video stream is opened
 				this.cameraActive = true;
-				
+
 				this.button.setText("ストップ");
 
 				// Capture frame every 33 ms (30 fps)
@@ -97,7 +122,7 @@ public class Controller {
 
 			// Camera is not running at this point
 			this.cameraActive = false;
-			
+
 			this.button.setText("もう一回スタート");
 
 			// Stop timer
@@ -134,16 +159,16 @@ public class Controller {
 
 		return frame;
 	}
-	
+
 	/**
 	 * Method to face detection and tracking
 	 * 
-	 * @param frame single frame which is used to detect face
+	 * @param frame
+	 *            single frame which is used to detect face
 	 */
 	private void detectFace(Mat frame) {
-		
+
 	}
-	
 
 	/**
 	 * The action triggered by selecting the Haar Classifier checkbox. It loads the

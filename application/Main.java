@@ -23,8 +23,11 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
 			Controller controller = loader.getController();
+			
+			// Initialize controller objects
+			controller.initialize();
+			
 			primaryStage.setOnCloseRequest((new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent e) {
 					controller.setClosed();
