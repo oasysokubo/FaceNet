@@ -4,11 +4,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.objdetect.Objdetect;
 import org.opencv.videoio.VideoCapture;
 
 import javafx.event.ActionEvent;
@@ -57,7 +60,7 @@ public class Controller {
 	private static int cameraID;
 
 	// face cascade classifier
-	private CascadeClassifier faceCascade;
+	private CascadeClassifier faceDetector;
 	private int absoluteFaceSize;
 
 	/**
@@ -65,7 +68,7 @@ public class Controller {
 	 */
 	protected void initialize() {
 		this.capture = new VideoCapture();
-		this.faceCascade = new CascadeClassifier();
+		this.faceDetector = new CascadeClassifier();
 		this.absoluteFaceSize = 0;
 
 		// Set fixed width of frame
@@ -168,6 +171,33 @@ public class Controller {
 	 */
 	private void detectFace(Mat frame) {
 
+		MatOfRect faces = new MatOfRect();
+		Mat grayFrame = new Mat();
+
+		// Convert frame to gray scale
+		Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BayerGR2GRAY);
+		// Equalize the frame histogram for more efficient detection
+		Imgproc.equalizeHist(grayFrame, grayFrame);
+
+		// Calculate minimum face size
+		if (this.absoluteFaceSize == 0) {
+			// Number of rows indicate the height
+			int height = grayFrame.rows();
+			if (Math.round(height * 0.2f) > 0) {
+				this.absoluteFaceSize = Math.round(height * 0.2f);
+			}
+		}
+
+		// Detect faces
+		this.faceDetector.detectMultiScale(grayFrame, faces, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
+				new Size(this.absoluteFaceSize, this.absoluteFaceSize), new Size());
+
+		// Draw rectangle to frame where it detects a face
+		Rect[] arrayOfFaces = faces.toArray();
+		for (int i = 0; i < arrayOfFaces.length; i++) {
+			Imgproc.rectangle(frame, arrayOfFaces[i].tl(), arrayOfFaces[i].br(), new Scalar(0, 255, 0), 3);
+		}
+
 	}
 
 	/**
@@ -204,7 +234,7 @@ public class Controller {
 	 */
 	private void checkboxSelection(String classifierPath) {
 		// load the classifier(s)
-		this.faceCascade.load(classifierPath);
+		this.faceDetector.load(classifierPath);
 
 		// now the video capture can start
 		this.button.setDisable(false);
