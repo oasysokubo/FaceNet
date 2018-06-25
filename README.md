@@ -3,7 +3,7 @@
 
 **Usage:**
 -----------
-![Alt Text](https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/face_detection_trumpgif.gif | width=200)
+![Alt Text](https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/face_detection_trumpgif.gif)
 
 
 **Requirements**
