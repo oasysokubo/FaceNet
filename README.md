@@ -1,4 +1,9 @@
-**face_detection** - Facial detection application using OpenCV. OpenCVを使ってる顔検出アプリ。 
+**face_detection** - Facial detection application using OpenCV. OpenCVを使ってる顔検出アプリ。
+
+
+**Usage:**
+-----------
+![Alt Text](https://media.giphy.com/media/pzcEsq9Vurd9MsPSEe/giphy.gif)
 
 
 **Requirements**
