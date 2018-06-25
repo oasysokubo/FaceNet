@@ -4,11 +4,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.objdetect.Objdetect;
 import org.opencv.videoio.VideoCapture;
 
 import javafx.event.ActionEvent;
@@ -57,15 +60,18 @@ public class Controller {
 	private static int cameraID;
 
 	// face cascade classifier
-	private CascadeClassifier faceCascade;
+	private CascadeClassifier faceDetector;
 	private int absoluteFaceSize;
+
+	// Check if either checkboxes are checked
+	private boolean checkIfChecked;
 
 	/**
 	 * Initialization of controller at start time
 	 */
 	protected void initialize() {
 		this.capture = new VideoCapture();
-		this.faceCascade = new CascadeClassifier();
+		this.faceDetector = new CascadeClassifier();
 		this.absoluteFaceSize = 0;
 
 		// Set fixed width of frame
@@ -75,6 +81,9 @@ public class Controller {
 
 		// Camera ID for camera usage
 		cameraID = 0;
+
+		// See if checkboxes are checked, initially not.
+		checkIfChecked = false;
 	}
 
 	/**
@@ -85,6 +94,12 @@ public class Controller {
 	 */
 	@FXML
 	protected void startCamera(ActionEvent event) {
+
+		// Check if either checkboxes are checked, if not program will crash severely.
+		if (!checkIfChecked) {
+			System.err.println("Select either Haar or LBP Classifier.");
+			this.cameraActive = true;
+		}
 
 		if (!this.cameraActive) {
 
@@ -168,6 +183,33 @@ public class Controller {
 	 */
 	private void detectFace(Mat frame) {
 
+		MatOfRect faces = new MatOfRect();
+		Mat grayFrame = new Mat();
+
+		// Convert frame to gray scale
+		Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BGRA2GRAY);
+		// Equalize the frame histogram for more efficient detection
+		Imgproc.equalizeHist(grayFrame, grayFrame);
+
+		// Calculate minimum face size
+		if (this.absoluteFaceSize == 0) {
+			// Number of rows indicate the height
+			int height = grayFrame.rows();
+			if (Math.round(height * 0.2f) > 0) {
+				this.absoluteFaceSize = Math.round(height * 0.2f);
+			}
+		}
+
+		// Detect faces
+		this.faceDetector.detectMultiScale(grayFrame, faces, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
+				new Size(this.absoluteFaceSize, this.absoluteFaceSize), new Size());
+
+		// Draw rectangle to frame where it detects a face
+		Rect[] arrayOfFaces = faces.toArray();
+		for (int i = 0; i < arrayOfFaces.length; i++) {
+			Imgproc.rectangle(frame, arrayOfFaces[i].tl(), arrayOfFaces[i].br(), new Scalar(0, 255, 0, 255), 3);
+		}
+
 	}
 
 	/**
@@ -176,6 +218,12 @@ public class Controller {
 	 */
 	@FXML
 	protected void haarSelected(Event event) {
+
+		// This point, haar checkbox is selected, therefore program can continue on in
+		// startCamera()
+		if (!this.checkIfChecked)
+			this.checkIfChecked = true;
+
 		// check whether the lpb checkbox is selected and deselect it
 		if (this.lbpClassifier.isSelected())
 			this.lbpClassifier.setSelected(false);
@@ -189,6 +237,12 @@ public class Controller {
 	 */
 	@FXML
 	protected void lbpSelected(Event event) {
+
+		// This point, haar checkbox is selected, therefore program can continue on in
+		// startCamera()
+		if (!this.checkIfChecked)
+			this.checkIfChecked = true;
+
 		// check whether the haar checkbox is selected and deselect it
 		if (this.haarClassifier.isSelected())
 			this.haarClassifier.setSelected(false);
@@ -204,7 +258,7 @@ public class Controller {
 	 */
 	private void checkboxSelection(String classifierPath) {
 		// load the classifier(s)
-		this.faceCascade.load(classifierPath);
+		this.faceDetector.load(classifierPath);
 
 		// now the video capture can start
 		this.button.setDisable(false);
@@ -244,6 +298,10 @@ public class Controller {
 
 	public void setClosed() {
 		this.stopAcquisition();
+	}
+	
+	public void quit() {
+		System.exit(0);
 	}
 
 }
