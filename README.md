@@ -4,6 +4,7 @@
 **Usage:**
 -----------
 ![Alt Text](https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/face_detection_trumpgif.gif)
+<img src="https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/face_detection_trumpgif.gif" width="48">
 
 
 **Requirements**
