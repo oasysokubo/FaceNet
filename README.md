@@ -7,6 +7,7 @@
 
 
 **What is Haar and LBP Classifiers?:**
+-------------------------------
 - LBP, Local Binary Patterns, cascade is a much faster algorithm than haar, but less accurate (10-20% less than Haar) because
 LBP uses integers for the calculations, which is better for embedded systems.
 - Haar cascade uses floating point arithmetic, which takes longer due to more complex calculations.
