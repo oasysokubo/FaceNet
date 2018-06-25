@@ -3,7 +3,7 @@
 
 **Usage:**
 -----------
-![Alt Text](https://media.giphy.com/media/pzcEsq9Vurd9MsPSEe/giphy.gif)
+![Alt Text](https://giphy.com/gifs/pzcEsq9Vurd9MsPSEe/html5)
 
 
 **Requirements**
