@@ -11,31 +11,41 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			// Load FXML Resource
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("JFX.fxml"));
+
+			// Store root element for controllers use
 			BorderPane root = (BorderPane) loader.load();
+
+			// Set Background
+			root.setStyle("-fx-background-color: whitesmoke;");
+
+			// Set Scene
 			Scene scene = new Scene(root, 800, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			// Give Stage Name
 			primaryStage.setTitle("Cammy");
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
+			// Show GUI
 			primaryStage.show();
+
+			// Set proper behavior when closing application
 			Controller controller = loader.getController();
-			
-			// Initialize controller objects
+			// Initialize controller Objects
 			controller.initialize();
-			
 			primaryStage.setOnCloseRequest((new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent e) {
 					controller.setClosed();
 				}
-				
+
 			}));
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,10 +57,10 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		// Load native OpenCV library
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
+
 		launch(args);
 	}
 }
