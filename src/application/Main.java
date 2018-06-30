@@ -13,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
 			// Load FXML Resource
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("JFX.fxml"));
@@ -29,17 +29,17 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			// Give Stage Name
-			primaryStage.setTitle("Cammy");
-			primaryStage.setResizable(true);
-			primaryStage.setScene(scene);
+			stage.setTitle("Cammy");
+			stage.setResizable(false);
+			stage.setScene(scene);
 			// Show GUI
-			primaryStage.show();
+			stage.show();
 
 			// Set proper behavior when closing application
 			Controller controller = loader.getController();
 			// Initialize controller Objects
 			controller.initialize();
-			primaryStage.setOnCloseRequest((new EventHandler<WindowEvent>() {
+			stage.setOnCloseRequest((new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent e) {
 					controller.setClosed();
 				}
