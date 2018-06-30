@@ -25,12 +25,12 @@ public class Main extends Application {
 			root.setStyle("-fx-background-color: whitesmoke;");
 
 			// Set Scene
-			Scene scene = new Scene(root, 800, 600);
+			Scene scene = new Scene(root, 600, 485);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			// Give Stage Name
 			primaryStage.setTitle("Cammy");
-			primaryStage.setResizable(false);
+			primaryStage.setResizable(true);
 			primaryStage.setScene(scene);
 			// Show GUI
 			primaryStage.show();
