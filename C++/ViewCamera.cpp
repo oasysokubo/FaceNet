@@ -1,7 +1,3 @@
-//
-//  ViewCamera.cpp
-//  webcam
-
 #include "ViewCamera.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videoio.hpp"
