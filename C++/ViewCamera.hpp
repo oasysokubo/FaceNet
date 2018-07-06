@@ -1,7 +1,3 @@
-//
-//  ViewCamera.hpp
-//  webcam
-
 #ifndef ViewCamera_hpp
 #define ViewCamera_hpp
 
