@@ -2,7 +2,7 @@
 
 **Java:**
 
-<img src="https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/face_detection_trumpgif.gif" width="450">
+<img src="https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/trump_gif.gif" width="450">
 
 
 **What is Haar and LBP Classifiers?**
@@ -15,6 +15,7 @@ LBP uses integers for the calculations, which is better for embedded systems.
 **Requirements**
 ------------------
 - Install OpenCV for Java: [Installation steps for all platforms](https://github.com/opencv-java/opencv-java-tutorials/blob/master/docs/source/01-installing-opencv-for-java.rst)
+
 
 **Built With:**
 ---------------

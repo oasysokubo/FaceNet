@@ -1,7 +1,3 @@
-//
-//  main.cpp
-//  webcam
-
 #include "ViewCamera.hpp"
 
 int main(int argc, const char * argv[]) {
