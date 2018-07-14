@@ -1,54 +1,72 @@
 #include "ViewCamera.hpp"
+#include "DetectFace.hpp"
+
 #include "opencv2/imgproc.hpp"
-#include "opencv2/videoio.hpp"
-#include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/objdetect.hpp"
+
 #include <iostream>
 
 using namespace cv;
 using namespace std;
 
+/** Function Headers */
+void detectAndDisplay(Mat frame);
+
+/** Global Variables */
+CascadeClassifier face_cascade;
+CascadeClassifier eye_cascade;
+String face_cascade_LOCAL = "";
+String eye_cascade_LOCAL = "";
+String window_name = "Cammy";
+
+
+/**
+ * @function    viewcamera
+ */
 int ViewCamera::viewcamera() {
-    VideoCapture cap(0);
     
+    VideoCapture cap;
+    Mat frame;
+    
+    // Load Cascades
+    if(!face_cascade.load(face_cascade_LOCAL)) { cout << "Error loading face cascade." << endl; return -1; }
+    if(!eye_cascade.load(eye_cascade_LOCAL)) { cout << "Error loading eye cascade." << endl; return -1; }
+    
+    // Read video stream from webcam
+    cap.open(0);
     if(!cap.isOpened()) {
         cout << "Error opening video stream\n"
         "Port number may be invalid" << endl;
         return -1;
     }
     
-    namedWindow("Cammy", 1);
+    namedWindow(window_name, WINDOW_NORMAL);
     
     while(true) {
         
-        Mat frame;
-        
         cap.read(frame);   // Get new frame from camera
-        
-        // -----
-        
-        // Load Face Cascade
-        CascadeClassifier face_cascade;
-        face_cascade.load("resources/haarcascades/haarcascade_frontalface_alt2.xml");
-        
-        // Detect Face
-        std::vector<Rect> faces;
-        face_cascade.detectMultiScale(frame, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
-        
-        // Draw circle on detected face
-        for(int i = 0; i < faces.size(); i++) {
-            Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
-            ellipse(frame, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar(255, 0 ,255), 4, 8, 0);
+        if(frame.empty()) {
+            break;
         }
         
-        // ----
+        // Set frame to sufficient size
+        resize(frame, frame, cv::Size(852, 480));
         
-        imshow("Cammy", frame);
+        // Open window to show frames
+        imshow(window_name, frame);
         
         // Key press action to quit
-        if(waitKey(1) == 'q')  // ASCII digit
+        if(waitKey(1) == 'q' || waitKey(1) == 'Q')  // ASCII digit
             break;
     }
     return 0;
 }
+
+/**
+ * @function    detectAndDisplay
+ */
+void detectAndDisplay(Mat frame) {
+    
+}
+

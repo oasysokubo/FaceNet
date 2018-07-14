@@ -5,7 +5,7 @@
 
 class ViewCamera {
 private:
-
+    void detectAndDisplay(cv::Mat);
 public:
     int viewcamera();
 };
