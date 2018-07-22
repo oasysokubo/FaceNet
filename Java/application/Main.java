@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
+/**
+ * Main class which loads the front-end interface.
+ */
 public class Main extends Application {
 
 	@Override
