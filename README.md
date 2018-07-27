@@ -10,7 +10,7 @@
 
 Java Face Detection:
 - Click on application in Java section of face_detection directory.
-- Main.java: Contains front-end visuals and connects XML for layout.
+- Main.java: Contains front-end visuals and connects FXML for layout.
 - Controller.java: Class detects face in field of vision of camera.
 
 
