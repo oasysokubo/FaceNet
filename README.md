@@ -5,6 +5,15 @@
 <img src="https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/trump_gif.gif" width="450">
 
 
+**Program File Descriptions**
+---------------------------
+
+Java Face Detection:
+- Click on application in Java section of face_detection directory.
+- Main.java: Contains front-end visuals and connects XML for layout.
+- Controller.java: Class detects face in field of vision of camera.
+
+
 **What is Haar and LBP Classifiers?**
 -------------------------------
 - LBP, Local Binary Patterns, cascade is a much faster algorithm than haar, but less accurate (10-20% less than Haar) because
