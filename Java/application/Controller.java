@@ -122,7 +122,7 @@ public class Controller {
 						// effectively grab and process a single frame
 						Mat frame = grabFrame();
 						// convert and show the frame
-						Image imageToShow = Utils.mat2Image(frame);
+						Image imageToShow = imageUtility(frame);
 						updateImageView(currentFrame, imageToShow);
 					}
 
@@ -145,6 +145,16 @@ public class Controller {
 
 		}
 
+	}
+	
+	/**
+	 * Get a colorized frame received from the camera
+	 * 
+	 * @param frame is a frame captured from the camera.
+	 * @return a colorized and formatted image.
+	 */
+	private Image imageUtility(Mat frame) {
+		return Utils.mat2Image(frame);
 	}
 
 	/**
