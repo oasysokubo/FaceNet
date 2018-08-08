@@ -5,7 +5,7 @@
 ------------------
 - Install OpenCV for Java: [Installation steps for all platforms](https://github.com/opencv-java/opencv-java-tutorials/blob/master/docs/source/01-installing-opencv-for-java.rst)
 
-**Program File Descriptions**
+**Descriptions**
 ---------------------------
 
 Java Face Detection:
@@ -14,7 +14,7 @@ Java Face Detection:
 - Controller.java: Class detects face in field of vision of camera.
 
 
-**Test Cases**
+**Test**
 --------------
 
 <img src="https://github.com/oasysokubo/face_detection/blob/master/trump_gif.gif">
