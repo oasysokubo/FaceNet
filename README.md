@@ -2,7 +2,7 @@
 
 **Java:**
 
-<img src="https://github.com/oasysokubo/face_detection/blob/master/resources/img_readme/trump_gif.gif" width="450">
+<img src="https://github.com/oasysokubo/face_detection/blob/master/trump_gif.gif">
 
 
 **Program File Descriptions**
