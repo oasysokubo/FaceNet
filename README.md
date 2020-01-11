@@ -1,4 +1,4 @@
-**face_detection** - Facial detection application using OpenCV. OpenCVを使ってる顔検出アプリ。
+Facial recognition and detection application using OpenCV. OpenCVを使ってる顔検出アプリ。
 
 
 **Requirements**
